@@ -472,6 +472,27 @@ class GenericWorkflowEngine(object):
             list_or_tuple = (list_or_tuple,)
         self.replaceCallbacks('*', list_or_tuple)
 
+    def __setitem__(self, key, value):
+        self._store[key] = value
+
+    def __contains__(self, key):
+        return key in self._store
+
+    def has_key(self, key):
+        return key in self._store
+
+    def __getitem__(self, key):
+        return self._store[key]
+
+    def get(self, key, default=None):
+        try:
+            return self[key]
+        except KeyError:
+            return default
+
+    def __delitem__(self, key):
+        del self._store[key]
+
     def setVar(self, key, what):
         """Stores the obj in the internal stack"""
         self._store[key] = what
